@@ -35,7 +35,7 @@ app.post('/',function(req,res){
     
   res.send(req.body);    // echo the result back
   //console.log(req.body);      // your JSON
-  var payload = req.body
+  var payload = "{" + req.body + ":10}";
   for(var key in payload){
       if(payload[key] == 'reset'){
         initScore();
@@ -114,11 +114,11 @@ var score = {
 var updateClient = function(){
     console.log('updateClient');
   io.emit('score', { 
-      //Classical
+      //Rock
       0 : score[0], 
-      //Jazz: 
+      //Classical: 
       1 : score[1], 
-      //Rock: 
+      //Jazz: 
       2 : score[2], 
       //Indie: 
       3 : score[3], 
@@ -130,11 +130,11 @@ var updateClient = function(){
 };
 var initScore = function(){
     score = { 
-      //Classical
+      //Rock
       0 : 0, 
-      //Jazz: 
+      //Classical: 
       1 : 0, 
-      //Rock: 
+      //Jazz: 
       2 : 0, 
       //Indie: 
       3 : 0, 
