@@ -35,7 +35,8 @@ app.post('/',function(req,res){
     
   res.send(req.body);    // echo the result back
   //console.log(req.body);      // your JSON
-  var payload = "{" + req.body + ":10}";
+  var mydata = req.body;
+  var payload = {mydata:10}; 
   for(var key in payload){
       if(payload[key] == 'reset'){
         initScore();
