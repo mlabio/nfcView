@@ -1,0 +1,47 @@
+extends layout
+
+block content
+ div#wrapper
+    #chart
+      ul#numbers
+        li
+          span 100%
+        li
+          span 90%
+        li
+          span 80%
+        li
+          span 70%
+        li
+          span 60%
+        li
+          span 50%
+        li
+          span 40%
+        li
+          span 30%
+        li
+          span 20%
+        li
+          span 10%
+        li
+          span 0%
+      ul#bars
+        li
+          .bar(data-percentage="56")
+          span Classical
+        li
+          .bar(data-percentage="33")
+          span Jazz
+        li
+          .bar(data-percentage="54")
+          span Rock
+        li
+          .bar(data-percentage="94")
+          span Indie
+        li
+          .bar(data-percentage="44")
+          span HipHop
+        li
+          .bar(data-percentage="23")
+          span EDM
