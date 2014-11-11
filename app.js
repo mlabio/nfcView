@@ -26,7 +26,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
-
 // Routes
 app.post('/',function(req,res){
   res.send(req.body);    // echo the result back
@@ -69,5 +68,23 @@ app.use(function(err, req, res, next) {
 });
 app.listen(port);
 
+//socketio 
+/*
+app.set('port', process.env.PORT || 3000);
+
+var server = require('http').createServer(app);
+server.listen(app.get('port'), function(){
+    console.log('Express listening on port ' + app.get('port'));
+});
+
+var io = require('socket.io').listen(server);
+
+io.sockets.on('connection', function (socket) {
+    socket.emit('news', { hello: 'world' });
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
+});
+*/
 
 module.exports = app;
