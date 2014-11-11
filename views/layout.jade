@@ -8,7 +8,7 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     script.
         $(function() {
-              var socket = io.connect('http://localhost:3000');
+              var socket = io.connect('http://marcom.io:3000');
               socket.on('score', function (data) {
                 for (var key in data) {
                     $('#'+key).attr('percentage', data[key]);
