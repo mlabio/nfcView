@@ -39,17 +39,18 @@ app.post('/',function(req,res){
     var mykey;
     for(var key in mydata){
         mykey = key;
-    };
+        console.log("mykey: " + mykey);
+    }
   var payload = {mykey:10}; 
-  for(var key in payload){
-      if(payload[key] == 'reset'){
+  for(var akey in payload){
+      if(payload[akey] == 'reset'){
         initScore();
       }else{
-          console.log('score before: ' + score[key]); 
-          score[key] = score[key] + payload[key];
-          console.log('score after: ' + score[key]); 
+          console.log('score before: ' + score[akey]); 
+          score[akey] = score[akey] + payload[akey];
+          console.log('score after: ' + score[akey]); 
       }
-  };
+  }
    updateClient();  
 
     res.render('index', function() {
