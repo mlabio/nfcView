@@ -10,12 +10,6 @@ var app = express();
 app.listen(8080);
 app.use(bodyParser.json());
 
-function onRequest_b (req, res) {
-  res.write('Response from 3000\n');
-  res.end();
-}
-//var port = process.env.PORT || 8080;
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -92,7 +86,7 @@ app.use(function(err, req, res, next) {
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-server.listen(3000);
+server.listen(8081);
 
 
 io.on('connection', function (socket) {
