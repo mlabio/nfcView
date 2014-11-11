@@ -3,7 +3,22 @@ html
   head
     title= title
     script(type='text/javascript', src='http://code.jquery.com/jquery-1.9.1.js')
+    script(type='text/javascript', src='https://cdn.socket.io/socket.io-1.2.0.js')
     script(type='text/javascript', src='/script/app/chart.js')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script.
+        $(function() {
+              var socket = io.connect('http://localhost:3000');
+              socket.on('score', function (data) {
+                for (var key in data) {
+                    $('#'+key).attr('percentage', data[key]);
+                    console.log(key + " -> " + data[key]);
+                  }
+                  chart.update(data);
+                }
+                //console.log(data);
+                //socket.emit('my other event', { note: 'data recieved from server' });
+              );
+        });
   body
     block content

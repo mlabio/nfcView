@@ -2,33 +2,40 @@
 
         //variables
         var myVar,
-            init = function(){
-                  var socket = io.connect('http://localhost');
-                  socket.on('news', function (data) {
-                    console.log(data);
-                    socket.emit('my other event', { my: 'data' });
-                  });
-            },
-            update = function (key, val) {
+            init = function (key, val) {
 
-                
-                console.log('updating');
+                console.log('chart init');
                 $("#bars li .bar").each(function (key, bar) {
+                    //console.log('key: ' + key + '  bar: ' + bar);
                     var percentage = $(this).data('percentage');
 
                     $(this).animate({
                         'height': percentage + '%'
                     }, 1000);
                 });
-                return 'updated chart';
+                return 'chart init';
+            },
+            update = function (data) {
+                console.log('chart update');
+                $("#bars li .bar").each(function (key, bar) {
+                    $(this).attr('data-percentage', data[key]);
+                    var percentage = data[key];
+                    
+                    $(this).animate({
+                        'height': percentage + '%'
+                    }, 1000);
+                    
+                }
+                );
+                console.log('chart complete');
             };
-        return{
-          update: update,
-        init: init
+        return {
+            init: init,
+            update: update
         };
 
     }());
 
-$( document ).ready(function() {
-    chart.update();
-});
+    $(document).ready(function () {
+        chart.init();
+    });

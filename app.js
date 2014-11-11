@@ -4,12 +4,21 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var port = process.env.PORT || 8080;
+var http = require('http');
+  
+var app = express();
+app.listen(8080);
+app.use(bodyParser.json());
+
+function onRequest_b (req, res) {
+  res.write('Response from 3000\n');
+  res.end();
+}
+//var port = process.env.PORT || 8080;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,11 +37,24 @@ app.use('/users', users);
 
 // Routes
 app.post('/',function(req,res){
+ //update view
+    
   res.send(req.body);    // echo the result back
-  console.log(req.body);      // your JSON
+  //console.log(req.body);      // your JSON
   var payload = req.body
-    res.render('index', function(payload) {
-    //res.send('done');
+  for(var key in payload){
+      if(payload[key] == 'reset'){
+        initScore();
+      }else{
+          console.log('score before: ' + score[key]); 
+          score[key] = score[key] + payload[key];
+          console.log('score after: ' + score[key]); 
+      }
+  };
+   updateClient();  
+
+    res.render('index', function() {
+
   });
     res.end();
 });
@@ -66,25 +88,68 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-app.listen(port);
 
-//socketio 
-/*
-app.set('port', process.env.PORT || 3000);
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-var server = require('http').createServer(app);
-server.listen(app.get('port'), function(){
-    console.log('Express listening on port ' + app.get('port'));
+server.listen(3000);
+
+
+io.on('connection', function (socket) {
+  //socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
 
-var io = require('socket.io').listen(server);
+var score = { 
+      //Classical
+      0 : 0, 
+      //Jazz: 
+      1 : 0, 
+      //Rock: 
+      2 : 0, 
+      //Indie: 
+      3 : 0, 
+      //HipHop: 
+      4 : 0, 
+      //EDM: 
+      5 : 0      
+  };
 
-io.sockets.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world' });
-    socket.on('my other event', function (data) {
-        console.log(data);
-    });
-});
-*/
+var updateClient = function(){
+    console.log('updateClient');
+  io.emit('score', { 
+      //Classical
+      0 : score[0], 
+      //Jazz: 
+      1 : score[1], 
+      //Rock: 
+      2 : score[2], 
+      //Indie: 
+      3 : score[3], 
+      //HipHop: 
+      4 : score[4], 
+      //EDM: 
+      5 : score[5]      
+  });
+};
+var initScore = function(){
+    score = { 
+      //Classical
+      0 : 0, 
+      //Jazz: 
+      1 : 0, 
+      //Rock: 
+      2 : 0, 
+      //Indie: 
+      3 : 0, 
+      //HipHop: 
+      4 : 0, 
+      //EDM: 
+      5 : 0      
+  };
+};
+
 
 module.exports = app;
