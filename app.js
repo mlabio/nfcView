@@ -34,7 +34,7 @@ app.post('/',function(req,res){
  //update view
     
   res.send(req.body);    // echo the result back
-  //console.log(req.body);      // your JSON
+  console.log(req.body);      // your JSON
   var mydata = req.body;
   var payload = {mydata:10}; 
   for(var key in payload){
