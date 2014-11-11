@@ -41,8 +41,14 @@ app.post('/',function(req,res){
         mykey = key;
         console.log("mykey: " + mykey);
     }
+    var score_value = 10;
+    if(mykey == -1){
+      score_value = "reset";   
+    }else{
+     score_value = 10;   
+    }
   var payload = {}; 
-    payload[mykey] = 10;
+    payload[mykey] = score_value;
   for(var akey in payload){
       if(payload[akey] == 'reset'){
         initScore();
